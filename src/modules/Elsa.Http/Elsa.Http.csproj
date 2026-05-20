@@ -18,7 +18,6 @@
     </ItemGroup>
 
     <ItemGroup>
-		<ProjectReference Include="..\Elsa.Expressions.JavaScript\Elsa.Expressions.JavaScript.csproj" />
 		<ProjectReference Include="..\Elsa.Expressions.Liquid\Elsa.Expressions.Liquid.csproj" />
 		<ProjectReference Include="..\Elsa.Resilience\Elsa.Resilience.csproj" />
 		<ProjectReference Include="..\Elsa.SasTokens\Elsa.SasTokens.csproj" />

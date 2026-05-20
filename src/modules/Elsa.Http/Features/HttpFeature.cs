@@ -32,7 +32,6 @@ namespace Elsa.Http.Features;
 /// <summary>
 /// Installs services related to HTTP services and activities.
 /// </summary>
-[DependsOn(typeof(HttpJavaScriptFeature))]
 [DependsOn(typeof(ResilienceFeature))]
 public class HttpFeature(IModule module) : FeatureBase(module)
 {
