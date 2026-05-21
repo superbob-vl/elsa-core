@@ -22,6 +22,14 @@ Start in [src/modules/Elsa.Identity](../../src/modules/Elsa.Identity).
 
 Identity supports store-based providers, configuration-based providers, and admin bootstrap providers.
 
+### Secret Hashing
+
+`ISecretHasher` ([Contracts/ISecretHasher.cs](../../src/modules/Elsa.Identity/Contracts/ISecretHasher.cs)) hashes secrets with adaptive PBKDF2-SHA256 (600 000 iterations by default, 256-bit key, 256-bit random salt). Envelopes are self-describing (`pbkdf2-sha256$<iterations>$<base64>`) so the iteration count can increase without a data migration.
+
+`VerifySecret` overloads that accept `out bool needsRehash` return `true` when the stored hash was produced at a lower iteration count than the current default or via the legacy SHA-256 path. Credential validators (`DefaultUserCredentialsValidator`, `DefaultApplicationCredentialsValidator`) call these overloads and re-store the upgraded hash transparently on a successful login.
+
+Salt generation and API key randomness use `RandomNumberGenerator.GetBytes()` from `System.Security.Cryptography`.
+
 ## Authentication
 
 [DefaultAuthenticationFeature](../../src/modules/Elsa.Identity/Features/DefaultAuthenticationFeature.cs) wires default authentication. The reference server calls:
@@ -115,3 +123,4 @@ Identity endpoints and user-management endpoints are permission-based; see [ADR 
 - Are bootstrap credentials only for development or secret-managed environments?
 - Does any diagnostic/logging feature expose sensitive data without redaction?
 - Do token settings use production-grade signing keys and data protection configuration?
+- Do credential validators use the `needsRehash` overload of `ISecretHasher.VerifySecret` and re-store upgraded hashes on successful login?

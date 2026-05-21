@@ -46,6 +46,8 @@ Defaults:
 
 EF Core persistence replaces these stores through [Elsa.Persistence.EFCore/Modules/Management](../../src/modules/Elsa.Persistence.EFCore/Modules/Management).
 
+`WorkflowInstanceFilter` ([Filters/WorkflowInstanceFilter.cs](../../src/modules/Elsa.Workflows.Management/Filters/WorkflowInstanceFilter.cs)) is the query filter type for workflow instances. Its `TimestampFilters` collection accepts dynamic column/operator/value predicates, but column names are validated against a whitelist (`AllowedTimestampFilterColumns`: `CreatedAt`, `UpdatedAt`, `FinishedAt`) before any query is constructed. Call the static `WorkflowInstanceFilter.ValidateTimestampFilters` at API request intake to return structured validation errors. The workflow instance list and alterations endpoints already do this.
+
 ## Definition Lifecycle
 
 ```mermaid
